@@ -1,0 +1,253 @@
+﻿@page "/Juego"
+@inject NavigationManager NavigationManager
+
+<div class="page-specific">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-2" href="#">
+                <img src="Images/Logo.jpeg" alt="Logo" style="height: 40px;">
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<!-- Modal de nivel medio -->
+@if (mostrarNivelMedio)
+{
+    <div class="modal">
+        <div class="modal-content">
+            <h2>¡Has avanzado al Nivel Medio!</h2>
+            <p>Ahora las preguntas serán un poco más difíciles.</p>
+            <button class="continue-btn" @onclick="CerrarModalNivelMedio">Continuar</button>
+
+        </div>
+    </div>
+}
+
+<!-- Modal de nivel difícil -->
+@if (mostrarNivelDificil)
+{
+    <div class="modal">
+        <div class="modal-content">
+            <h2>¡Has llegado al Nivel Difícil!</h2>
+            <p>Prepárate para un desafío aún mayor.</p>
+            <button @onclick="CerrarModalNivelDificil">Continuar</button>
+        </div>
+    </div>
+}
+
+<!-- Modal de finalización del quiz -->
+@if (mostrarModal)
+{
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close" @onclick="CerrarModal">&times;</span>
+            <h2>¡Felicidades!</h2>
+            <p>Has completado el quiz.</p>
+            <p>Tu puntuación final es: @puntuacion</p>
+            <button @onclick="ReiniciarQuiz">Volver a Jugar</button>
+            <button @onclick="VolverAlMenu">Cerrar</button>
+        </div>
+    </div>
+}
+
+<!-- Contenedor del quiz -->
+<div class="quiz-container" style="@(mostrarModal || mostrarNivelMedio || mostrarNivelDificil ? "filter: blur(5px);" : "")">
+    <h3>@preguntas[indicePregunta].TextoPregunta</h3>
+
+    <div class="options">
+        @foreach (var opcion in preguntas[indicePregunta].Opciones)
+        {
+            <button class="option-btn" @onclick="() => SeleccionarRespuesta(opcion)">@opcion</button>
+        }
+    </div>
+
+    <div class="feedback" style="@colorRespuesta">
+        @mensajeRespuesta
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" style="width:@(indicePregunta * 100 / preguntas.Count)%"></div>
+    </div>
+
+    <div class="score">
+        Puntaje actual: @puntuacion
+    </div>
+</div>
+
+@code {
+    private int indicePregunta = 0;
+    private List<Pregunta> preguntas;
+    private int puntuacion = 0;
+    private string mensajeRespuesta = "";
+    private string colorRespuesta = "";
+    private bool mostrarModal = false; // Controla la visibilidad del modal final
+    private bool mostrarNivelMedio = false; // Controla el modal del avance a nivel medio
+    private bool mostrarNivelDificil = false; // Controla el modal del avance al nivel difícil
+
+    void VolverAlMenu()
+    {
+        NavigationManager.NavigateTo("/menu"); // Asegúrate de que la ruta "/menu" sea correcta
+    }
+
+    void CerrarModal()
+    {
+        mostrarModal = false;
+    }
+
+    void CerrarModalNivelMedio()
+    {
+        mostrarNivelMedio = false;
+        indicePregunta++;  // Continuar con la siguiente pregunta después del modal de nivel medio
+    }
+
+    void CerrarModalNivelDificil()
+    {
+        mostrarNivelDificil = false;
+        indicePregunta++;  // Continuar con la siguiente pregunta después del modal de nivel difícil
+    }
+
+    void ReiniciarQuiz()
+    {
+        mostrarModal = false;
+        indicePregunta = 0;
+        puntuacion = 0;
+        mensajeRespuesta = "";
+        colorRespuesta = "";
+    }
+
+    protected override void OnInitialized()
+    {
+        preguntas = new List<Pregunta>
+        {
+            new Pregunta
+            {
+                TextoPregunta = "¿Cuál es el país más grande del mundo por superficie?",
+                Opciones = new List<string> { "Rusia", "Canadá", "China", "Estados Unidos" },
+                RespuestaCorrecta = "Rusia"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿En qué continente se encuentra el desierto del Sahara?",
+                Opciones = new List<string> { "Asia", "América", "África", "Europa" },
+                RespuestaCorrecta = "África"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿Quién escribió 'Don Quijote de la Mancha'?",
+                Opciones = new List<string> { "Luis de Góngora", "Miguel de Cervantes", "Jorge Luis Borges", "Gabriel García Márquez" },
+                RespuestaCorrecta = "Miguel de Cervantes"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿Qué elemento químico tiene el símbolo 'O'?",
+                Opciones = new List<string> { "Oro", "Osmio", "Oxígeno", "Olivino" },
+                RespuestaCorrecta = "Oxígeno"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿Cuál es el planeta más grande del Sistema Solar?",
+                Opciones = new List<string> { "Saturno", "Júpiter", "Urano", "Neptuno" },
+                RespuestaCorrecta = "Júpiter"
+            },
+            // Aquí es donde cambia el nivel
+            new Pregunta
+            {
+                TextoPregunta = "¿Qué año finalizó la Segunda Guerra Mundial?",
+                Opciones = new List<string> { "1945", "1948", "1950", "1943" },
+                RespuestaCorrecta = "1945"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿Cuál es la capital de Francia?",
+                Opciones = new List<string> { "Lyon", "Marsella", "París", "Niza" },
+                RespuestaCorrecta = "París"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿Quién pintó la 'Última Cena'?",
+                Opciones = new List<string> { "Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo" },
+                RespuestaCorrecta = "Leonardo da Vinci"
+            },
+             new Pregunta
+            {
+                TextoPregunta = "¿Cuál es el río más largo del mundo?",
+                Opciones = new List<string> { "Nilo", "Amazonas", "Yangtsé", "Mississippi" },
+                RespuestaCorrecta = "Amazonas"
+            },
+            // Preguntas después del nivel medio (nivel difícil)
+            new Pregunta
+            {
+                TextoPregunta = "¿Qué país es el mayor productor de café en el mundo?",
+                Opciones = new List<string> { "Vietnam", "Brasil", "Colombia", "Etiopía" },
+                RespuestaCorrecta = "Brasil"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿En qué año se derrumbó el Muro de Berlín?",
+                Opciones = new List<string> { "1989", "1987", "1991", "1985" },
+                RespuestaCorrecta = "1989"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿Cuál es la moneda oficial de Japón?",
+                Opciones = new List<string> { "Yen", "Dólar", "Euro", "Won" },
+                RespuestaCorrecta = "Yen"
+            },
+            new Pregunta
+            {
+                TextoPregunta = "¿Qué animal es conocido como el 'rey de la selva'?",
+                Opciones = new List<string> { "León", "Tigre", "Elefante", "Gorila" },
+                RespuestaCorrecta = "León"
+            }
+        };
+    }
+
+    private void SeleccionarRespuesta(string respuesta)
+    {
+        ElegirRespuesta(respuesta);
+    }
+
+    private void ElegirRespuesta(string respuesta)
+    {
+        if (respuesta == preguntas[indicePregunta].RespuestaCorrecta)
+        {
+            mensajeRespuesta = "¡Correcto! +5 puntos.";
+            colorRespuesta = "color: green;";
+            puntuacion += 5; // Suma 5 puntos si la respuesta es correcta
+        }
+        else
+        {
+            mensajeRespuesta = $"Incorrecto. La respuesta correcta es: {preguntas[indicePregunta].RespuestaCorrecta}.";
+            colorRespuesta = "color: red;";
+        }
+
+        // Control para el avance de niveles
+        if (indicePregunta == 4)
+        {
+            mostrarNivelMedio = true; // Mostrar modal de nivel medio en la pregunta 5
+        }
+        else if (indicePregunta == 9)
+        {
+            mostrarNivelDificil = true; // Mostrar modal de nivel difícil en la pregunta 10
+        }
+        else if (indicePregunta < preguntas.Count - 1)
+        {
+            indicePregunta++;
+        }
+        else
+        {
+            mostrarModal = true; // Muestra el modal al completar el quiz
+        }
+    }
+
+    public class Pregunta
+    {
+        public string TextoPregunta { get; set; }
+        public List<string> Opciones { get; set; }
+        public string RespuestaCorrecta { get; set; }
+    }
+}

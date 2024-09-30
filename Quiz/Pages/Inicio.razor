@@ -1,0 +1,20 @@
+﻿@page "/"
+
+<div class="quiz-container">
+    <div class="quiz-content">
+        <h1>Cuanto sabes de cultura general</h1>
+        <p>¿Listo para poner a prueba tus conocimientos? ¡A jugar!</p>
+        <button class="btn start-btn" @onclick="IniciarJuego">Comenzar Juego</button>
+    </div>
+</div>
+
+@code {
+    private void IniciarJuego()
+    {
+        // Navegar a la página del quiz o a la primera pregunta
+        NavigationManager.NavigateTo("/Juego");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+}

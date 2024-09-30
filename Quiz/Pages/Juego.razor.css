@@ -1,0 +1,241 @@
+﻿body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    
+}
+
+h3.pregunta {
+    font-family: 'Roboto', sans-serif;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+}
+
+h3 {
+    font-family: 'Impact', sans-serif;
+    color: #f4f4f9;
+    text-align: center; 
+    width: 100%; /* Asegura que el elemento tome todo el ancho disponible */
+    margin: 20px 0; /* Añade un poco de espacio arriba y abajo del título */
+}
+button {
+    font-family: 'Impact', sans-serif;
+    text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+    background-color: #007BFF; /* Azul, similar a tus otros botones */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px; /* Espacio por encima del botón */
+    width: 200px; /* Ancho fijo para el botón */
+    display: block; /* Asegura que el botón sea un bloque para centrar fácilmente */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    button:hover {
+        background-color: #0056b3; /* Azul oscuro para el hover */
+    }
+
+
+
+.score {
+
+    font-size: 18px;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+.option-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.option-btn:active {
+    transform: scale(0.98);
+}
+
+.progress-bar {
+    width: 80%; /* Ajusta el ancho a un porcentaje deseado */
+    height: 20px; /* Altura de la barra de progreso */
+    background-color: #ddd; /* Color de fondo de la barra de progreso */
+    border-radius: 5px; /* Bordes redondeados */
+    margin: 20px auto; /* Añade margen arriba/abajo y auto para centrar horizontalmente */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Opcional: sombra para un poco de profundidad */
+}
+
+.progress {
+    height: 100%; /* Asegura que la barra interna ocupe toda la altura de su contenedor */
+    background-color: #06cf96; /* Color de la barra de progreso */
+    border-radius: 5px; /* Bordes redondeados para la barra interna */
+    width: 50%; /* Ajusta este valor según el progreso actual */
+    transition: width 0.5s ease-in-out; /* Transición suave para cambios en la barra */
+}
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Distribuye espacio uniformemente entre y alrededor de los elementos */
+    margin: 20px 0;
+}
+
+.option-btn {
+    background-color: #ff5e62; /* Color de fondo azul */
+    color: white; /* Texto en color blanco */
+    border: none; /* Sin bordes */
+    padding: 10px 15px; /* Padding ajustado para un tamaño adecuado */
+    font-size: 14px; /* Tamaño de fuente reducido */
+    cursor: pointer; /* Cursor tipo pointer para indicar que es clickeable */
+    margin: 10px; /* Aumentamos el margen para más espacio entre botones */
+    width: 45%; /* Ancho ajustado para dos columnas */
+    border-radius: 15px; /* Bordes redondeados para un estilo suave */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15); /* Sombra suave para efecto de profundidad */
+    transition: background-color 0.3s; /* Transición suave al cambiar de color */
+    display: inline-block; /* Asegura que los botones se comporten correctamente con los márgenes */
+}
+
+    .option-btn:hover {
+        background-color: #a6383b; /* Color más oscuro al pasar el mouse */
+    }
+
+.quiz-container {
+    font-family: 'Impact', sans-serif;
+    text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+    display: flex;
+    background: linear-gradient(-45deg, #23d5ab, #e73c7e, #ee7752, #23a6d5);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    width: 100%;
+    z-index: -1;
+    padding: 20px;
+    box-sizing: border-box;
+    
+}
+.page-specific .navbar {
+    background-color: #080100;
+    height: 80px;
+}
+
+.navbar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    background-color: #ff5e62 !important;
+}
+
+.quiz-container::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    background: transparent;
+    animation: riseBubbles 12s ease-in-out infinite;
+    background: radial-gradient(circle, transparent, transparent 20%, rgba(255,255,255,0.2) 30%);
+    background-size: 10px 10px;
+}
+
+@keyframes riseBubbles {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.modal {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro semitransparente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    float: right;
+    cursor: pointer;
+}
+
+    .close:hover {
+        color: #000;
+    }
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.continue-btn {
+    background-color: #34a8a5;  /* Verde azulado */
+    color: white;              /* Texto blanco para mayor contraste */
+    border: none;              /* No border */
+    padding: 10px 20px;        /* Padding para hacer el botón más grande */
+    font-size: 16px;           /* Tamaño de fuente legible */
+    cursor: pointer;           /* Cursor tipo 'hand' para indicar que es clickeable */
+    border-radius: 5px;        /* Bordes redondeados */
+    transition: background-color 0.3s; /* Transición suave para hover */
+}
+
+.continue-btn:hover {
+    background-color: #27817e;  /* Un tono más oscuro para el hover */
+}
+
